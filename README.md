@@ -42,4 +42,4 @@ There are two endpoints (currently) available for caching data.
     - Calling **http://localhost:5000/cache/foo** after setting will return **bar**.
 2. /fromurl/{uriEncodedUrl}
   - use this endpoint to cache and return any data serialized from the provided URL.
-  - Example: **http://localhost:5000/fromurl/http%3A%2F%2Fdev.intsvc.nelnet.net%2FHistoryNote%2Fapi%2Fv1%2Fhistorynotes%2F99%2F1%2F003823158%2Fabeeson%3FrequestId%3D5302fe94-7596-41f6-84a8-2977f5c3eecf**
+  - Example: **http://localhost:5000/cache/fromurl/http%3A%2F%2Fdev.intsvc.nelnet.net%2FHistoryNote%2Fapi%2Fv1%2Fhistorynotes%2F99%2F1%2F003823158%2Fabeeson%3FrequestId%3D5302fe94-7596-41f6-84a8-2977f5c3eecf**
