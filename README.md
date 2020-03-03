@@ -21,6 +21,7 @@ dotnet run
 **Note**: If using Docker Desktop for Windows, make sure you are pointing to Linux Containers.
 ```
 cd <project-root-dir>
+dotnet restore
 dotnet publish -c Release
 docker-compose up
 ```
