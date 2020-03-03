@@ -1,4 +1,4 @@
-# nCache
+# nCache-dotnet
 nCache-dotnet- A simple caching example using Containerized dotnetcore 3.1 and Redis
 
 ### Dependencies to run locally
