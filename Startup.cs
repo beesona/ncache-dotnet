@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
 
 namespace ncahe_dotnet
 {
@@ -25,8 +27,15 @@ namespace ncahe_dotnet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            LogManager.LoadConfiguration("nlog.xml");
+
             services.AddControllers();
             services.AddHttpClient();
+
+            services.AddLogging(l => {
+                l.ClearProviders();
+                l.AddNLog();
+            }).Configure<LoggerFilterOptions>(c => c.MinLevel = Microsoft.Extensions.Logging.LogLevel.Trace);
 
             services.AddDistributedRedisCache(option =>
             {
