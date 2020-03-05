@@ -6,8 +6,8 @@
   <targets async="true">
     <target name="Splunk"
             xsi:type="SplunkHttpEventCollector"
-            serverUrl="http://localhost:8088"
-            token="d1e50c7a-6a20-4c62-a6c9-76075697a861"
+            serverUrl="http://ncache-dotnet_splunk_1:8088"
+            token="e2116c6c-5fa0-4a91-bcdf-0b7442a6f9d5"
             channel="channel-guid"
             retriesOnError="0"
             batchSizeBytes="0"
@@ -26,3 +26,4 @@
     <logger name="*" minlevel="Trace" writeTo="Splunk" />
   </rules>
 </nlog>
+<!--serverUrl="http://ncache-dotnet_so1_1:8088"-->

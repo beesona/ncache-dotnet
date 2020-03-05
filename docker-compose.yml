@@ -1,4 +1,9 @@
 version: '3'
+
+volumes:
+  so1-var:
+  so1-etc:
+
 services:
   web:
     build: .
@@ -6,6 +11,7 @@ services:
     - "5000:80"
     depends_on:
     - redis
+    - splunk
     restart: on-failure
     environment: 
         - REDIS_HOST=redis
@@ -13,3 +19,15 @@ services:
     image: redis
     ports:
       - "6379:6379"    
+  splunk:
+    image: splunk/splunk:latest
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=Testing1
+      - DEBUG=true
+    ports:
+      - "8000:8000"
+      - "8088:8088"
+    volumes:
+      - so1-var:/opt/splunk/var      
+      - so1-etc:/opt/splunk/etc
