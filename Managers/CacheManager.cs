@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
+using Microsoft.Extensions.Logging;
 using ncache.models;
 using Newtonsoft.Json;
 
@@ -15,10 +16,12 @@ namespace ncahe_dotnet.Managers
     public class CacheManager : ICacheManager
     {
         private readonly IDistributedCache _cache;
+        private readonly ILogger<CacheManager> _logger;
 
-        public CacheManager(IDistributedCache distributedCache)
+        public CacheManager(IDistributedCache distributedCache, ILogger<CacheManager> logger)
         {
             _cache = distributedCache;
+            _logger = logger;
         }
 
         public async Task<bool> SetHashAsync(HashModel hashData)
@@ -27,9 +30,11 @@ namespace ncahe_dotnet.Managers
             {
                 var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(hashData.fields));
                 await _cache.SetAsync(hashData.key, data);
+                _logger.LogInformation($"Added Key {hashData.key} to the cache. {DateTime.Now}");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"Error saving key {hashData.key} to the cache. {DateTime.Now}");
                 return false;
                 throw ex;
             }
@@ -51,6 +56,8 @@ namespace ncahe_dotnet.Managers
                     returnData.key = key;
                     returnData.fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataAsString);
 
+                    _logger.LogInformation($"Retrieved Key {key} from the cache. {DateTime.Now}");
+
                     return returnData;
                 }
                 else
@@ -61,6 +68,7 @@ namespace ncahe_dotnet.Managers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"Error retrieving key {key} from the cache. {DateTime.Now}");
                 return new HashModel();
                 throw ex;
             }
