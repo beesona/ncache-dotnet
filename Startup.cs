@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ncahe_dotnet.Managers;
 using NLog;
 using NLog.Extensions.Logging;
 
@@ -44,6 +45,8 @@ namespace ncahe_dotnet
                     "127.0.0.1";
                 option.InstanceName = "master";
             });
+
+            services.AddSingleton(typeof(ICacheManager), typeof(CacheManager));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

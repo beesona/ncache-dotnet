@@ -9,9 +9,10 @@ services:
     build: .
     ports:
     - "5000:80"
+    - "5001:443"
     depends_on:
     - redis
-    - splunk
+#    - splunk
     restart: on-failure
     environment: 
         - REDIS_HOST=redis
@@ -19,15 +20,15 @@ services:
     image: redis
     ports:
       - "6379:6379"    
-  splunk:
-    image: splunk/splunk:latest
-    environment:
-      - SPLUNK_START_ARGS=--accept-license
-      - SPLUNK_PASSWORD=Testing1
-      - DEBUG=true
-    ports:
-      - "8000:8000"
-      - "8088:8088"
-    volumes:
-      - so1-var:/opt/splunk/var      
-      - so1-etc:/opt/splunk/etc
+#  splunk:
+#    image: splunk/splunk:latest
+#    environment:
+#      - SPLUNK_START_ARGS=--accept-license
+#      - SPLUNK_PASSWORD=Testing1
+#      - DEBUG=true
+#    ports:
+#      - "8000:8000"
+#      - "8088:8088"
+#    volumes:
+#      - so1-var:/opt/splunk/var      
+#      - so1-etc:/opt/splunk/etc
