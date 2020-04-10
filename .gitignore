@@ -3,3 +3,4 @@ bin
 .vscode
 obj
 .vs
+appsettings.Deploy.json

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace ncache.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class CacheController : ControllerBase
     {

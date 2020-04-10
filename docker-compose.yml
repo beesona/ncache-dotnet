@@ -1,10 +1,18 @@
 version: '3'
 
 volumes:
-  so1-var:
-  so1-etc:
+#  so1-var:
+#  so1-etc:
+  red-data:
 
 services:
+  client:
+    build: ../ng-docker/
+    ports:
+    - "4100:80"
+    depends_on:
+    - web
+    restart: on-failure
   web:
     build: .
     ports:
@@ -12,23 +20,26 @@ services:
     - "5001:443"
     depends_on:
     - redis
-    - splunk
+ #   - splunk
     restart: on-failure
     environment: 
         - REDIS_HOST=redis
   redis:
     image: redis
+    command: redis-server --appendonly yes
     ports:
-      - "6379:6379"    
-  splunk:
-    image: splunk/splunk:latest
-    environment:
-      - SPLUNK_START_ARGS=--accept-license
-      - SPLUNK_PASSWORD=Testing1
-      - DEBUG=true
-    ports:
-      - "8000:8000"
-      - "8088:8088"
+      - "6379:6379"
     volumes:
-      - so1-var:/opt/splunk/var      
-      - so1-etc:/opt/splunk/etc
+      - red-data:/data
+  #splunk:
+  #  image: splunk/splunk:latest
+  #  environment:
+  #    - SPLUNK_START_ARGS=--accept-license
+  #    - SPLUNK_PASSWORD=Testing1
+  #    - DEBUG=true
+  #  ports:
+  #    - "8000:8000"
+  #    - "8088:8088"
+  #  volumes:
+  #    - so1-var:/opt/splunk/var      
+  #    - so1-etc:/opt/splunk/etc
