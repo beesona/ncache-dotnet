@@ -5,6 +5,9 @@ nCache-dotnet- A simple caching example using Containerized dotnetcore 3.1 and R
 - Dotnet Core 3.1+
 - Docker 19.0.3.1
 
+### appsettings.Deploy.json
+The Dockerfile has a dependency on a file called appsettings.Deploy.json and won't build without it. I created this file but left it out of source control to keep my deployed secrets, keys, and test user accounts out of source control. you will need to copy the existing appsettings file into a appsettings.Deploy.json before trying to build the docker image.
+
 ### Running Locally
 **Note**: If using Docker Desktop for Windows, make sure you are pointing to Linux Containers.
 ```
