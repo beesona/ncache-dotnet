@@ -33,6 +33,15 @@ namespace ncache_dotnet.Services
         {
             var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
 
+            var returnUser = new User
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Username = user.Username,
+                Password = user.Password
+            };
+
             // return null if user not found
             if (user == null)
                 return null;
@@ -44,15 +53,15 @@ namespace ncache_dotnet.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, returnUser.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
+            returnUser.Token = tokenHandler.WriteToken(token);
 
-            return user.WithoutPassword();
+            return returnUser.WithoutPassword();
         }
     }
 }
